@@ -1,0 +1,42 @@
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <style>
+        table { border: 1px solid #333333; border-collapse: collapse; }
+        td { padding: 10px; border: 1px solid #333333; }
+        input { padding:5px; }
+    </style>
+</head>
+<body>
+
+<!--/* 세션에 있는 id로 DB 가져와서 사용자 입력 비번이랑 같은지 비교하는 코드. 성공하면 board/list로 보내준다.*/-->
+<th:block th:if="${session.user != null }" >
+    <script type="text/javascript" th:inline="javascript">
+
+        var user = /*[[${session.user}]]*/;
+
+        console.log(user, user.user_number);
+
+      //  var is_user = /*[[${is_user}]]*/;
+
+
+        if (user.user_number >0 ){
+            // session에 userVO가 정상적으로 담기면 user_number 는 0보다 크다.
+            alert( user.id+'회원님 환영합니다.');
+
+
+            location.href='/home/home_main';
+        }
+        else{
+            alert( '아이디와 비번을 확인하세요');
+            location.href='/login/login';
+        }
+
+    </script>
+</th:block>
+
+</body>
+</html>

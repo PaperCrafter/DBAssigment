@@ -1,5 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -8,39 +7,75 @@
     <h1>Board Insert</h1>
 
 
-    <form name="updateForm" id="updateForm" method="post"
-    style="width:600px;">
+    <form name="updateForm" id="updateForm" method="post" style="width:600px;">
         <div>
-            <span>글번호</span> <span th:text="${board.qna_no}">11111</span>
-            <input type="hidden" name="qna_no" id="qna_no" th:value="${board.qna_no}"/>
+            <span>글번호</span> <span th:text="${board.board_num}">11111</span>
+            <input type="hidden" name="board_num" id="board_num" th:value="${board.board_num}"/>
         </div>
         <div>
             <span>회원번호</span>
-            <input type="text" name="m_no" id="m_no" value="1" th:value="${board.m_no}"/>
+            <span name="user_number" id="user_number" th:value="${board.user_number}"></span>
+        </div>
+        <div>
+            <span>글 제목</span>
+            <input type="text" name="board_title" id="board_title" th:value="${board.board_title}"/>
         </div>
         <div>
             <span>비밀번호</span>
-            <input type="password" name="qna_passwd" id="qna_passwd" value="" />
+            <input type="password" name="board_password" id="board_password" placeholder="비밀번호를 입력하세요." />
         </div>
         <div>
-            <span>상세</span>
-            <textarea name="qna_context" id="qna_context" style="width: 100%; height: 100px;"><th:block th:text="${board.qna_context}"></th:block></textarea>
+            <span>글 내용</span>
+            <textarea name="board_content" id="board_content" style="width: 100%; height: 100px;"><th:block th:text="${board.board_content}"></th:block></textarea>
         </div>
     </form>
 
-    <input type="button" value="수정" onclick="update();"/>
+    <input type="button" value="수정" onclick="update(this.board_num);"/>
 
-    <script type="text/javascript">
-        var update = function(){
+    <script type="text/javascript" th:inline="javascript">
+        function update(board_num){
+            var board_pass = /*[[ ${board.board_password} ]]*/;
+            var board_num = /*[[${board.board_num}]]*/;
+            var data = { "board_password" : $('#board_password').val()};
 
-            if($.trim($('#qna_passwd').val())==''){
-                alert('비밀번호를 입력해주세요');
+            console.log($('#board_password').val());
+            console.log(data);
+            // DB 에 넣을때 password를 복호화 해서 넣었기 때문에 이때 우리는 사용자 입력 비번과 DB상 비번을
+            // 여기서 비교 못한다 가져가서 mapper에서 같은값으로 복호화하면 같은 암호가 나오기때문에 그걸로 비교해서 리턴받아야된다..
+
+            // 사용자가 어떤 비번을 입력했으면
+            if($.trim($('#board_password').val())!=''){
+                // 그 비번을 ajax로 controller 로 보낸후 service -> mapper 를 이용해서 DB 단에서 비교하고 리턴 받을것이다.
+
+                var url = "/board/update_confirm/"+ board_num;
+                console.log(url);
+
+                $.ajax({
+                      url: url
+                    , data : data
+                    , type : "POST"
+                    , success: function(data){
+
+                          console.log(data);
+
+                          if(data.flagdata == true) {
+                              $('#updateForm').attr('action', '/board/update').submit();
+                          }
+                          else{
+                              alert("비밀번호가 일치 하지 않습니다.");
+                              return;
+                          }
+
+                        }
+                    , error: function(error){ console.log("에러 : " + error);}
+                });
+            }
+            else{
+                alert('비밀번호를 입력해주세요.');
                 return;
             }
 
-            $('#updateForm')
-                .attr('action','/board/update')
-                .submit();
+
         };
     </script>
 

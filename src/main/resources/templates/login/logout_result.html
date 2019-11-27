@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+</head>
+<body>
+<h1>로그 아웃 페이지</h1>
+
+<script type="text/javascript" th:inline="javascript">
+
+    $(document).ready(function() {
+        var id = /*[[${id}]]*/;
+        console.log(id);
+
+        alert(id+'로그아웃 되셨습니다.');
+
+        location.href='/home/home_main';
+    });
+
+</script>
+
+
+
+</body>
+</html>

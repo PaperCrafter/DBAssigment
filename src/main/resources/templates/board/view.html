@@ -2,56 +2,304 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- jQuery -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- common CSS -->
+    <link rel="stylesheet" href="/css/common.css">
+
+
 </head>
 <body>
-    <h1>Board View</h1>
+
+<title>Board View</title>
+
+<article>
+    <div class="container" role="main">
+
+        <form name="viewForm" id="viewForm" method="get">
+            <div class ="bg-white rounded shadow-sm">
+
+                <div class ="board_title">
+                    <label>게시글 제목 : </label><span th:text="${board.board_title}"> : 글 타이틀</span>
+                </div>
+                <div class ="board_info_bo">
+                    <label>회원번호 : </label><span th:name="user_number" th:id="user_number" th:text="${board.user_number}">          회원번호</span>
+                </div>
+                <span class = "board_author">등록일자</span> <span th:text="${#dates.format(board.board_register_date, 'YYYY-mm-dd HH:mm')}">      등록일자</span>
 
 
-    <form name="viewForm" id="viewForm" method="get" style="width:600px;">
+                <div class="board_content">
+                    <div th:text="${board.board_content}">상세 내용.</div>
+                </div>
+             </div>
+        </form>
+    </div>
 
-        <div><span>글번호</span> <span th:text="${board.qna_no}">글번호</span></div>
-
-        <div><span>회원번호</span> <span th:text="${board.m_no}">회원번호</span></div>
-
-        <div><span>등록일자</span> <span th:text="${#dates.format(board.qna_regdate, 'YYYY-mm-dd HH:mm')}">등록일자</span></div>
-
-        <div>
-            <span>상세</span>
-            <div th:text="${board.qna_context}"></div>
-        </div>
-    </form>
-
+<!--    수정 / 삭제 버튼은 글 쓴사람만 보일수 있게  -->
+    <th:block th:if="${session.user.user_number == board.user_number}">
     <input type="button" value="수정" onclick="modifyBoard();"/>
     <input type="button" value="삭제" onclick="deleteBoard();"/>
+    </th:block>
+
     <input type="button" value="목록" onclick="listBoard();"/>
 
 
-    <script type="text/javascript" th:inline="javascript">
-        
-        var qna_no = /*[[ ${board.qna_no} ]]*/;
-        
-        var modifyBoard = function(){
-            $('#viewForm')
-                .attr('action','/board/update/' + qna_no)
-                .attr('method','get')
-                .submit();
-        };
-        
-        
-        var deleteBoard = function(){
-            if(confirm('삭제하시겠습니까?')){
-                $('#viewForm')
-                    .attr('action','/board/delete/' + qna_no)
-                    .attr('method','post')
-                    .submit();
+    <div class = "my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
+
+        <form id ="reply_form" name ="reply_form" method="post" >
+            <input type="hidden" th:id="board_num" th:name="board_num" th:value="${board.board_num}"/>
+            <div class ="row">
+                <div class="col-sm-10">
+                    <textarea name="comment" class="form-control" id="comment" rows="3" placeholder="내용을 입력해주세요" > </textarea>
+                </div>
+                <div class="col-sm-2">
+                    <span  th:name="reply_id" th:id="reply_id" th:text="${user.id}">댓글 작성자</span>
+<!--                    8/14일 수요일에 아래 둘중에 div 안에 버튼이 들어가야되서 멀쓸지 고민해보기-->
+                    <input type="button" value="등록" id="btnReplySave"  onclick ="reply_save();" class="btn btn-sm btn-primary" style="width: 100%; margin-top: 10px"/>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Reply List {s}-->
+    <div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
+        <h6 class="border-bottom pb-2 mb-0">Reply list</h6>
+        <div id="replyList"></div>
+    </div>
+    <!-- Reply List {e}-->
+</article>
+
+<script type="text/javascript" th:inline="javascript">
+    var reply_save = function(){
+
+        var comment = $('#comment').val();
+        var url = "/restBoard/saveReply";
+        /*
+        //var board_num = {"board_num" : [[ ${board.board_num} ]]};
+        //var reply_id ={"reply_id":[[ ${user.id} ]]};
+
+        // 8.20 왜 위 주석 처럼 하면 안되고, 그 밑에 거처럼 하면 은 되는지 물어보기.
+         ---> 검색과 추측해서 내린 결론은 JSON.stringify에서 스트링화해주는건데
+        var paramData = JSON.stringify({
+            "comment": comment
+            , "reply_id": reply_id
+            , "board_num": board_num
+        });
+        위의 방식대로 하면 여기서 "1.reply_id": 2.reply_id 에서  2.reply_id가 @Requestbody로 받아질때 replyVO 객체랑
+        안맞아서 그런가?  근데 그러면 reply_id는 원래 스트링인데 replyVO 에서도 string인데....
+        */
+        var reply_id = [[${user.id}]];
+        board_num = [[${board.board_num}]];
+
+        var paramData = JSON.stringify({
+            "comment": comment
+            , "reply_id": reply_id
+            , "board_num": board_num
+        });
+        var headers = {"Content-Type" : "application/json"
+            , "X-HTTP-Method-Override" : "POST"};
+        $.ajax({
+              url: url
+            , headers : headers
+            , data : paramData
+            , type : "POST"
+            , dataType : 'text'
+            , success: function(result){
+                showReplyList();
+                $('#comment').val('');
+                $('#reply_id').val('');
+
             }
+            , error: function(error){
+                console.log("에러 : " + error);
+            }
+        });
+    };
+</script>
+
+
+
+<script type="text/javascript" th:inline="javascript">
+    // ================================================================================================
+    // 게시판 수정/ 삭제 눌렀을 때 실행되는 script
+
+    var board_num = /*[[ ${board.board_num} ]]*/;
+    var modifyBoard = function(){
+        $('#viewForm')
+            .attr('action','/board/update/' + board_num)
+            .attr('method','get')
+            .submit();
+    };
+    var deleteBoard = function(){
+        if(confirm('삭제하시겠습니까?')){
+            $('#viewForm')
+                .attr('action','/board/delete/' + board_num)
+                .attr('method','post')
+                .submit();
+        }
+    };
+    var listBoard = function(){
+        location.href='/board/list';
+    };
+
+</script>
+
+<!--================================================================================================-->
+<!--
+            댓글 수정버튼만 눌렀을때 실행되는 스크립트
+-->
+<script type="text/javascript" th:inline="javascript">
+    function fn_editReply(reply_num, reply_id, comment){
+        var r_htmls = "";
+        r_htmls += '<div class="media text-muted pt-3" id="reply_num' + reply_num + '">';
+        r_htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
+        r_htmls += '<title>Placeholder</title>';
+        r_htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+        r_htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+        r_htmls += '</svg>';
+        r_htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+        r_htmls += '<span class="d-block">';
+        r_htmls += '<strong class="text-gray-dark">' + reply_id + '</strong>';
+        r_htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+        r_htmls += '<a href="javascript:void(0)" onclick="fn_updateReply(' + reply_num + ', \'' + reply_id + '\')" style="padding-right:5px">저장</a>';
+        r_htmls += '<a href="javascript:void(0)" onclick="showReplyList()">취소<a>';
+        r_htmls += '</span>';
+        r_htmls += '</span>';
+        r_htmls += '<textarea name="editComment" id="editComment" class="form-control" rows="3">';
+        r_htmls += comment;
+        r_htmls += '</textarea>';
+
+        r_htmls += '</p>';
+        r_htmls += '</div>';
+
+        $('#reply_num' + reply_num).replaceWith(r_htmls);
+        $('#reply_num' + reply_num + ' #editComment').focus();
+    }
+</script>
+
+
+<!--================================================================================================-->
+<!--
+댓글 수정하기 눌렀을때 실행되는 스크립트
+-->
+<script type="text/javascript">
+    function fn_updateReply(reply_num, reply_id){
+        var replyEditComment = $('#editComment').val();
+        var url = "/restBoard/updateReply";
+        var paramData = JSON.stringify(
+            {"comment": replyEditComment
+                , "reply_id" : reply_id
+                , "reply_num": reply_num});
+
+        var headers = {"Content-Type" : "application/json"
+            , "X-HTTP-Method-Override" : "POST"};
+        $.ajax({
+            url: url
+            , headers : headers
+            , data : paramData
+            , type : "POST"
+            , dataType : 'text'
+            , success: function(result){
+                console.log(result);
+                showReplyList();
+            }
+            , error: function(error){
+                console.log("에러 : " + error);
+            }
+        });
+    }
+</script>
+
+<!--================================================================================================-->
+<!--
+댓글 삭제하기 눌렀을때 실행되는 스크립트
+-->
+<script type="text/javascript">
+    function fn_deleteReply(reply_num,reply_id){
+        var paramData = {
+            "reply_num": reply_num,
+            "reply_id" : reply_id
         };
-        var listBoard = function(){
-            location.href='/board/list';
-        };
-        
-    </script>
+        $.ajax({
+            url: "/restBoard/deleteReply"
+            , data : paramData
+            , type : 'GET'
+            , dataType : 'text'
+            , success: function(result){
+                showReplyList();
+            }
+            , error: function(error){
+                console.log("에러 : " + error);
+            }
+        });
+    }
+</script>
+
+
+<!--=============================================================================-->
+<script type="text/javascript" th:inline="javascript">
+
+    $(document).ready(function(){
+        showReplyList();
+    });
+
+    function showReplyList(){
+        var url = "/restBoard/getReplyList";
+        var board_num = {"board_num" : [[ ${board.board_num} ]]};
+        var user_id = /*[[${user.id}]]*/;
+
+        // var board_num = [[${board.board_num}]];
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: board_num,
+            dataType:'json',
+            success: function(result) {
+                var r_htmls = "";
+                if(result.length < 1){
+                    r_htmls += '<p>등록된 댓글이 없습니다. </p>';
+
+                } else {
+                    $(result).each(function () {
+                        r_htmls += '<div class="media text-muted pt-3" id="reply_num' + this.reply_num + '">';
+                        r_htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
+                        r_htmls += '<title>Placeholder</title>';
+                        r_htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
+                        r_htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
+                        r_htmls += '</svg>';
+                        r_htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
+                        r_htmls += '<span class="d-block">';
+                        r_htmls += '<strong class="text-gray-dark">' + this.reply_id + '</strong>';
+                        r_htmls += '<span style="padding-left: 7px; font-size: 9pt">';
+
+                        // 본인 댓글일때
+                        if(user_id == this.reply_id){
+                            r_htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.reply_num + ', \'' + this.reply_id + '\', \'' + this.comment + '\' )" style="padding-right:5px">수정</a>';
+                            r_htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.reply_num + ',\'' + this.reply_id + '\')" >삭제</a>';
+                        }
+                        else{
+                        }
+                        r_htmls += '</span>';
+                        r_htmls += '</span>';
+                        r_htmls += this.comment;
+
+                        r_htmls += '</p>';
+                    // <span th:text="${#dates.format(board.board_register_date, 'YYYY-mm-dd HH:mm')}">
+                        r_htmls += '<span style="padding-right:4px; font-size:small">' + this.register_date +'</span>';
+                        r_htmls += '</div>';
+                    });	//each end
+                }
+                $("#replyList").html(r_htmls);
+            }	   // Ajax success end
+        });	// Ajax end
+    }
+</script>
+
+
+
 
 </body>
 </html>

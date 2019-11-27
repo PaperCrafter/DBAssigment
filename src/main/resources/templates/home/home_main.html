@@ -1,0 +1,364 @@
+
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="all" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/animate.css"/>
+    <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/js/slick.min.js"></script>
+    <script type="text/javascript" src="/js/front.js"></script>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=gqm95mfa9r"></script>
+
+    <title>BERON</title>
+</head>
+<body>
+<div id="wrap">
+    <header>
+        <div class="wrapper">
+            <h1><a href="#;"><img src="/images/ico/prime11.png" alt="프라임"></a></h1>
+            <nav>
+                <h2><a href="#;">메뉴열기</a></h2>
+                <ul>
+                    <li><a href="#beron_bq" class="scr_move">프라임 Story</a></li>
+                    <li><a href="#whyberon" class="scr_move">Why 프라임?</a></li>
+                    <li>
+                        <a href="#space_wrap" class="scr_move">공간 소개</a>
+                        <ul>
+                            <li><a href="#brilliant" class="scr_move">Space</a></li>
+                            <li><a href="#branch" class="scr_move">지점소개</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/board/list" class="scr_move">게시판</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <script language="JavaScript">
+                <!--
+                function ActionCheck()
+                {
+                    var obj = document.logInForm;
+
+                    if(obj.id.value == "") {
+                        alert("이름을 입력하세요");
+                        obj.id.focus();
+                        return false;
+                    } else if(obj.passwd.value == "") {
+                        alert("비밀번호를 입력하세요");
+                        obj.passwd.focus();
+                        return false;
+                    }
+                    else {
+                        obj.action = "/login/login" ;
+                        obj.submit();
+                    }
+                }
+
+                // 회원가입 버튼을 눌렀을때 가는 페이지-->
+                var insert = function(){
+                    location.href ='/user/insert';
+                };
+            </script>
+
+            <form name="logInForm" id="logInForm" method="post">
+
+                <div class="gnb">
+                    <a th:if="${session.user == null}" href="#;" class="counsel_btn">로그인</a>
+                    <a th:if="${session.user != null}" href ="/logout" class ="logout_btn">로그아웃</a>
+                    <div class="counsel_pop">
+                        <strong>로그인</strong>
+                        <ul>
+                            <li><input type="text" name="id" id="id" placeholder="아이디"></li>
+                            <li><input type="password" name="passwd" id="passwd" placeholder="비밀번호"></li>
+                        </ul>
+                        <input type="button" onClick="javascript:ActionCheck();" value="로그인">
+                        <a href="#;">닫기</a>
+                    </div>
+
+                    <a th:if="${session.user !=null}" th:href="@{'/user/view/' + ${session.user.user_number}}" class="my_page">마이페이지</a>
+                    <!--                    =========================================== 마이페이지 user.user_number 값이 view에서 안읽히는듯 추후에 주석 풀고 수정할것!&ndash;&gt;-->
+                    <!--                    처음에 나는 아래 처럼 이렇게 했는데 강사님해  해준거(user/list.html) 보니깐 위에 href 할때 @로 해줬다 타임리프 용어인거 같다.-->
+<!--                    <a th:if="${session.user !=null}" th:href="/user/view/ + ${session.user.user_number}" class="my_page">마이페이지</a>-->
+
+                    <a th:if="${session.user == null}" href = "/user/insert" class="sign_in">회원가입</a>
+
+                </div>
+            </form>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main_visual">
+            <div class="deco wrapper wow fadeInUp">
+                <p class="tit"><span>D</span>esign<br>Team Prime</p>
+                <p>배움에 최적화된 공간을 창조하기 위한 그룹입니다.</p>
+            </div>
+        </div><!-- //main_visual -->
+
+        <div class="beron_bq">
+            <div class="wrapper">
+                <div class="blockquote wow fadeInUp">
+                    <p><span>배</span>움은 우연히 얻어지는 것이 아니라</p>
+                    <p>열성을 다해 강구하고 부지런히 집중해야</p>
+                    <p>얻을 수 있는 것이다</p>
+                    <em>애비게일 애덤스</em>
+                </div>
+                <div class="bq_info wow fadeInUp">
+                    <p>
+                        <span>배론은 수험생 분들 뿐만 아니라</span>
+                        <span>끝없이 배우고 싶은 모든 분들의 열정을 생각하며 시작했습니다.</span>
+                    </p>
+                    <p>
+                        <span>배움을 얻기 위한 여러분 개개인마다 집중력을 발휘할수 있는 환경이 다르다고 생각하여</span>
+                        <span>정형화된 딱딱한 독서실 분위기를 완전히 탈피해</span>
+                        <span>다양한 공간에서 각자의 성향에 맞게 공부할수 있도록 하고 싶었습니다.</span>
+                    </p>
+                    <p>
+                        <span>다양한 배움의 공간을 탄생시키기 위해 노력한 결과로</span>
+                        <span>배론이라는 공간이 탄생 했습니다.</span>
+                    </p>
+                </div>
+            </div>
+        </div><!-- //beron_bq -->
+
+        <div class="whyberon wrapper">
+            <h3 class=" wow fadeInUp">Why 프라임?</h3>
+            <ul>
+                <li class="why01 wow fadeInUp">
+                    <strong class="long">Future oriented Premium</strong>
+                    <p>
+                        <span>미래 지향적인 설계로</span>
+                        <span>학습 능력에 대한 최대한의 배려,</span>
+                        <span>21세기형 스터디 공간</span>
+                    </p>
+                </li>
+                <li class="why02 wow fadeInUp">
+                    <strong>EQ & Rest</strong>
+                    <p>
+                        <span>모던 빈티지에 기반을 둔</span>
+                        <span>현대적인 디자인으로</span>
+                        <span>편안하고 창의적인 공간 구성</span>
+                    </p>
+                </li>
+                <li class="why03 wow fadeInUp">
+                    <strong>Free Options</strong>
+                    <p>
+                        <span>커피머신 및 하이엔더</span>
+                        <span>공기청정 시스템으로</span>
+                        <span>집중에 최적화 된 환경적인 요소</span>
+                    </p>
+                </li>
+            </ul>
+        </div><!-- //whyberon -->
+
+        <div class="space_wrap">
+            <div class="top">
+                <h3 class=" wow fadeInUp">공간 소개</h3>
+                <ul class="tab">
+                    <li class="btn_space"><a href="#space_slide" class="scr_move">Space</a></li>
+                    <li class="btn_branch"><a href="#branch" class="scr_move">지점 소개</a></li>
+                </ul>
+            </div>
+
+            <div class="space_slide">
+                <div>
+                    <div class="wrapper brilliant">
+                        <div class="info wow fadeInUp">
+                            <strong>Brilliant Room</strong>
+                            <p>
+                                <span>산소가 나오는 친환경 나무 벽으로 구분된</span>
+                                <span>집중력을 최대로 끌어 줄 수 있는 완벽한 개인 공간 입니다.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <ul>
+                        <li><img src="/images/pic/brilliant02.jpg" alt="Brilliant Room"></li>
+                        <li><img src="/images/pic/brilliant01.jpg" alt="Brilliant Room"></li>
+                    </ul>
+                </div><!-- //Brilliant Room -->
+
+                <div>
+                    <div class="wrapper clever">
+                        <div class="info wow fadeInUp">
+                            <strong>Clever Room</strong>
+                            <p>
+                                <span>익숙하지만 확 트인 공간으로 답답하지 않게</span>
+                                <span>공부 할 수 있는 일반 열람실 입니다</span>
+                                <span>쾌적한 환경을 위한 비 흡연자 열람실을 따로 제공합니다.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <ul>
+                        <li><img src="/images/pic/clever01.jpg" alt="Clever Room"></li>
+                        <li><img src="/images/pic/clever02.jpg" alt="Clever Room"></li>
+                        <li><img src="/images/pic/clever03.jpg" alt="Clever Room"></li>
+                    </ul>
+                </div><!-- //Clever Room -->
+
+                <div>
+                    <div class="wrapper evolution">
+                        <div class="info wow fadeInUp">
+                            <strong>Evolution Room</strong>
+                            <p>
+                                <span>스터디 모임과 함께 의논할 수 있는 공간으로</span>
+                                <span>방음처리가 잘 되있으며, 보드와 모니터 코드까지</span>
+                                <span>갖추고 있는 완벽히 분리된 공간 입니다.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <ul>
+                        <li><img src="/images/pic/evolution01.jpg" alt="Evolution Room"></li>
+                        <li><img src="/images/pic/evolution02.jpg" alt="Evolution Room"></li>
+                        <li><img src="/images/pic/evolution03.jpg" alt="Evolution Room"></li>
+                        <li><img src="/images/pic/evolution04.jpg" alt="Evolution Room"></li>
+                        <li><img src="/images/pic/evolution05.jpg" alt="Evolution Room"></li>
+                    </ul>
+                </div><!-- //Evolution Room -->
+
+                <div>
+                    <div class="wrapper">
+                        <div class="info wow fadeInUp">
+                            <strong>Fabulous Lounge</strong>
+                            <p>
+                                <span>여성/남성 휴게실과 수면실을 갖추고</span>
+                                <span>전자레인지, 간식거리 등 언제든 이용 가능 합니다.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <ul>
+                        <li><img src="/images/pic/fabulous01.jpg" alt="Fabulous Lounge"></li>
+                        <li><img src="/images/pic/fabulous02.jpg" alt="Fabulous Lounge"></li>
+                    </ul>
+                </div><!-- //Fabulous Lounge -->
+
+                <div>
+                    <div class="wrapper">
+                        <div class="info wow fadeInUp">
+                            <strong>Delight Cafe</strong>
+                            <p>
+                                <span>카페에서 자유롭게 공부하는 듯한 효과를 주는 공간,</span>
+                                <span>서로를 배려하며 함께 이용하는 공간입니다.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <ul>
+                        <li><img src="/images/pic/cafe07.jpg" alt="Delight Cafe"></li>
+                        <li><img src="/images/pic/cafe01.jpg" alt="Delight Cafe"></li>
+                        <li><img src="/images/pic/cafe02.jpg" alt="Delight Cafe"></li>
+                        <li><img src="/images/pic/cafe03.jpg" alt="Delight Cafe"></li>
+                        <li><img src="/images/pic/cafe04.jpg" alt="Delight Cafe"></li>
+                        <li><img src="/images/pic/cafe05.jpg" alt="Delight Cafe"></li>
+                        <li><img src="/images/pic/cafe06.jpg" alt="Delight Cafe"></li>
+                    </ul>
+                </div><!-- //Delight Cafe -->
+            </div><!-- //space_slide -->
+
+
+            <script>
+                function view1() {
+                    branch_a.style.display = "block";
+                    branch_b.style.display = "none";
+                    branch_menu_a.style.display = "block";
+                    branch_menu_b.style.display = "none";
+                }
+
+            </script>
+            <style>
+                .branch_a {float:right; }
+                .branch_b {float:right; }
+
+                .branch_a .branch_menu1 {color:white; width:120px; height:60px; margin: 5px 20px; padding:10px 20px; border:1px solid white;}
+                .branch_a .branch_menu2 {color:#333333; width:120px; height:60px; margin: 5px 20px; padding:10px 20px; border:1px solid #333333;}
+                .branch_b .branch_menu1 {color:#333333; width:120px; height:60px; margin: 5px 20px; padding:10px 20px; border:1px solid #333333;}
+                .branch_b .branch_menu2 {color:white; width:120px; height:60px; margin: 5px 20px; padding:10px 20px; border:1px solid white;}
+            </style>
+            <div class="branch">
+                <div id="branch_menu_a" class="branch_a">
+                    <div class="branch_menu1" onclick="view1()">
+                        강남점
+                    </div>
+
+                </div>
+
+                <div class="wrapper" id="branch_a">
+                    <strong>1호점 강남점</strong>
+                    <div class="branch_info">
+                        <ul class="branch_photo">
+                            <li><img src="/images/pic/branch01_01.jpg" alt="1호점"></li>
+                            <li><img src="/images/pic/branch01_02.jpg" alt="1호점"></li>
+                            <li><img src="/images/pic/branch01_03.jpg" alt="1호점"></li>
+                            <li><img src="/images/pic/branch01_04.jpg" alt="1호점"></li>
+                            <li><img src="/images/pic/branch01_05.jpg" alt="1호점"></li>
+                            <li><img src="/images/pic/branch01_06.jpg" alt="1호점"></li>
+                            <li><img src="/images/pic/branch01_07.jpg" alt="1호점"></li>
+                        </ul>
+                        <div class="info_wrap">
+                            <ul>
+                                <li>
+                                    <strong>주소</strong>
+                                    <p>서울 강남구 비트아카데미<br> (서울 강남구 1234-123)</p>
+                                </li>
+                                <li>
+                                    <strong>운영시간</strong>
+                                    <p>
+                                        <em>독서실</em> &nbsp;&nbsp; AM 09:00 - AM 01:00<br>
+                                        <em>스터디카페</em> &nbsp;&nbsp; AM 09:00 - PM 12:00 <br>
+                                        <em>연중무휴</em>
+                                    </p>
+                                </li>
+                                <li>
+                                    <strong>대표번호</strong>
+                                    <a href="tel:12-345-6789" class="phone_link">12-345-6789</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div><!-- //branch -->
+
+
+
+        </div>
+
+
+
+    </div><!-- //container -->
+
+    <footer>
+        <div class="wrapper">
+            <div>
+                <span>프라임</span>
+                <span>대표이사 : 비트</span>
+                <span>사업자등록번호 : 187-88-00848</span>
+                <span>E-MAIL : bit_tema02@naver.com</span>
+                <span>TEL : 02.1234.5678</span>
+                <span>주소 : 서울시 강남구 비트로 12길 20 비트아카데미 3층</span>
+            </div>
+            <p class="copy">Copyright © bit All rights Reserved.</p>
+        </div>
+    </footer>
+</div>
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+<script src="/js/jquery.magnific-popup.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/common.js"></script>
+
+
+<iframe name="frame_action" style="width:100%; height:200px;display:none;" scrolling="yes" src="" frameborder="0"  allowTransparency></iframe>
+
+</body>
+</html>

@@ -17,41 +17,143 @@
     </style>
 
 </head>
+
+<script type="text/javascript" th:inline="javascript">
+    var insert = function(){
+        var user = /*[[${session.user}]]*/;
+
+        console.log(user);
+
+        if (user!=null ){
+            // 유저면 글 등록으로 가기 ( 관리자나 / 회원 --  둘다 글쓰기는 동일)
+            $('#insertForm').attr('action','/board/insert').submit();
+        }
+        else{
+            // 유저 아니면 로그인 화면으로 가기.
+            alert("로그인을 해주세요.");
+            $('#insertForm').attr('action','/login/login').submit();
+        }
+    }
+
+</script>
+
+
 <body>
+<a href="/home/home_main">홈페이지로 이동</a>
+
+<div th:if="${session.user != null}" ><a href = "/logout">로그아웃</a></div>
+<div th:if="${session.user == null}" ><a href = "/login/login">로그인</a></div>
+
+
+<!--<div class="notice">
+    <div class="wrapper">
+        <h3 class=" wow fadeInUp">NEWS & EVENT</h3>
+        <ul class="tab wow fadeInUp">
+            <li class="btn_news"><a href="#news" class="scr_move">NEWS</a></li>
+            <li class="btn_event"><a href="#event" class="scr_move">EVENT</a></li>
+        </ul>
+
+        <div class="board_latest news wow fadeInUp">
+            <strong>NEWS</strong>
+            <ul>
+
+                &lt;!&ndash;
+                <li>
+                    <a href="#;">
+                        <p>[공지] 미래 지향적인 설계로 실제로 학습 미래 지향적인 설계로 실제로 학습미래</p>
+                        <span>2019.08.01</span>
+                    </a>
+                </li>
+                &ndash;&gt;
+            </ul>
+        </div>&lt;!&ndash; //board_latest &ndash;&gt;
+
+        <div class="board_latest event wow fadeInUp">
+            <strong>EVENT</strong>
+            <ul>
+            </ul>
+        </div>&lt;!&ndash; //board_latest &ndash;&gt;
+    </div>
+</div>&lt;!&ndash; //notice &ndash;&gt;-->
+
+
+<!-- <th:block if="${session.user != null}">
+    <a href ="/logout">로그아웃</a>
+
+</th:block>
+<li>
+
+    <a th: if="${session.user != null}" href="/logout">로그아웃</a>
+</li>
+
+<li>
+    <a th: if="${session.user == null}" href="/login/login">로그인</a>
+</li>-->
     <h1>Board List</h1>
-
-
     <table>
         <thead>
             <tr>
                 <td colspan="99" style="text-align:right;">
                     전체 게시물 갯수 : <span th:text="${boardPaging.totalCount}">00</span>개
                 </td>
+<!--                <td th:text="${session.user}">회원번호</td>  -->
             </tr>
             <tr>
 
-                <td>글번호</td>
-                <td>아이디</td>
-                <td>내용</td>
-                <td>등록일</td>
+                <td>글번호 </td>
+                <td>제목</td>
+                <td>작성자</td>
+                <td><span>내용</span></td>
+                <td>작성시간</td>
+
             </tr>
         </thead>
-
-
-        <tbody>
-
+          <!--  <td th:text="${session.user.passwd}"><-&#45;&#45;여기</td>
+        <td th:text="${session.user.user_number}"><-&#45;&#45;여기</td>
+        <td th:text="${session.user.name}"><-&#45;&#45;여기</td>
+        <td th:text="${session.user.email}"><-&#45;&#45;여기</td>-->
 
 
         <tr th:each="board:${boardList}">
-            <td th:text="${board.qna_no}">글번호</td>
-            <td th:text="${board.m_id}">아이디</td>
-            <td><a th:href="@{'/board/view/' + ${board.qna_no}}"><span th:text="${board.qna_context}"></span></a></td>
-            <td th:text="${#dates.format(board.qna_regdate, 'MM-dd HH:mm')}">등록일</td>
+<!--           <td th:text="${session.user.user_number}">회원번호</td>-->
+
+
+            <td th:text="${board.board_num}">글번호</td>
+            <td th:text="${board.board_title}">글제목</td>
+
+            <td th:text="${board.id}">작성자</td>
+
+<!--            <td><a th:href="@{'/board/view/' + ${board.board_num}}"><span th:text="${board.board_content}"></span></a></td>-->
+<!--            <th:block th:if="${user.user_number}"-->
+
+            <td th:if="${session.user!=null}"><a th:href="@{'/board/view/' + ${board.board_num}}"><span th:text="${board.board_content}" ></span></a></td>
+            <td th:if="${session.user == null}"><a th:href="@{'/login/login'}"><span th:text="${board.board_content}" ></span></a></td>
+
+            <td th:text="${#dates.format(board.board_register_date, 'MM-dd HH:mm')}">등록일</td>
         </tr>
-        </tbody>
+
+
+        
+
+        
+
     </table>
 
-    <input type="button" value="등록" onclick="location.href='/board/insert';"/>
+
+    <form name="insertForm" id="insertForm" method="get" >
+        <input type="button" value="등록" onclick="insert()"/>
+        <input type="hidden" name = "user_number"  th:value="${session.user.user_number}"/>
+        <input type="hidden" name = "id"  th:value="${session.user.id}"/>
+        <input type="hidden" name = "passwd"  th:value="${session.user.passwd}"/>
+    </form>
+
+
+
+
+
+
+
+
 
 
     <div style="text-align: center; width:100%;">

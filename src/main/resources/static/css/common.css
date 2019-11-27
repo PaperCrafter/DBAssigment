@@ -1,0 +1,74 @@
+body {
+	padding-top: 70px;
+	padding-bottom: 30px;
+}
+.board_title {
+	font-weight : 700;
+	font-size : 16pt;
+	margin : 10pt;
+}
+.board_info_box {
+	color : #6B6B6B;
+	margin : 10pt;
+}
+.board_author {
+	font-size : 14pt;
+	margin-right : 10pt;
+}
+.board_date {
+	font-size : 14pt;
+}
+.board_content {
+	color : #444343;
+	font-size : 14pt;
+	margin : 10pt;
+}
+
+@charset "utf-8";
+@import url('font.css');
+
+/* Reset */
+* {box-sizing:border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; outline:none}
+html {height:100%; overflow-y:scroll; -ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; line-height:1.3; font-size:10px;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0; padding:0;}
+body {height:100%; font-family:"notosans", "Malgun Gothic", Dotum, Arial, sans-serif; height:100%; min-width:320px; font-size:2.5rem; letter-spacing: -0.03rem; -webkit-font-smoothing:antialiased; -webkit-overflow-scrolling:touch; padding-top: constant(safe-area-inset-top); padding-bottom: constant(safe-area-inset-bottom); padding-top:env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);}
+h1,h2,h3,h4,h5,h6 {font-weight:normal; font-size:100%}
+strong {font-weight:700;}
+input, select, textarea, button, label {font-size:100%; vertical-align:middle}
+select {width:100%; height:42px; padding:0 25px 0 15px; font-size:2.5rem; font-family:"notosans", "Malgun Gothic", Dotum, Arial, sans-serif; color:#222; border:none; -webkit-appearance: none;  -moz-appearance: none; appearance: none; border:1px solid #b7b7b7; background:#fff url(../images/icon/select_arrow.jpg) right 14px center no-repeat; -webkit-background-size:10px 5px; background-size:10px 5px; transition:border-color .3s ease;}
+select::-ms-expand {display:none;}
+input {border:1px solid #eaeaea; font-size:2.5rem;}
+input:disabled {opacity:1; -webkit-text-fill-color: inherit}
+input[type="text"], input[type="password"], input[type="tel"], input[type="email"], input[type="number"] {height:36px; font-size:2.5rem; padding:0 10px; outline:none; font-family:"notosans", "Malgun Gothic", Dotum, Arial, sans-serif; -webkit-appearance: none;  -moz-appearance: none; appearance:none; border:1px solid #d4d4d4; background:#fff; transition:border-color .3s ease; border:0; border-radius:0;}
+input[type="text"] {width:230px;}
+input[type="text"]+input[type="text"] {margin-left:10px;}
+input[type="text"]:focus, input[type="password"]:focus, input[type="tel"]:focus, input[type="email"]:focus, input[type="number"]:focus {border-color:#00b5ef;}
+fieldset, img, iframe {border:0 none}
+img {max-width:100%; height:auto; vertical-align:middle; border-style:none;}
+textarea {width:100%; padding:15px; -webkit-box-sizing:border-box; box-sizing:border-box; resize:none; border:1px solid #ccc; font-family:"notosans", "Malgun Gothic", Dotum, Arial, sans-serif; -webkit-appearance: none;  -moz-appearance: none; appearance: none;}
+em, address {font-style:normal}
+
+a {text-decoration:none; background-color:transparent; vertical-align:middle; -webkit-text-decoration-skip:objects; color:#000; word-break: break-word}
+a:hover, a:active, a:focus {text-decoration:none}
+button {text-decoration:none; background-color:transparent; vertical-align:middle; -webkit-text-decoration-skip:objects; color:#000; word-break: break-word}
+button:hover, button:active, button:focus {text-decoration:none}
+menu,li {list-style:none}
+button {padding:0; margin:0; border:0; cursor:pointer; vertical-align:middle; background:none; font-family:"notosans", "Malgun Gothic", Dotum, Arial, sans-serif}
+button, input {overflow:visible}
+button, select {text-transform:none}
+button, html [type="button"], [type="reset"],[type="submit"] {-webkit-appearance:button}
+button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {border-style:none; padding:0}
+button:-moz-focusring,[type="button"]:-moz-focusring,[type="reset"]:-moz-focusring,[type="submit"]:-moz-focusring {outline:1px dotted ButtonText}
+caption {width:0; height:0; font-size:0; line-height:0; overflow:hidden; visibility:hidden}
+hr {display:none}
+i,em,address{font-style:normal}
+label {cursor:pointer}
+table {width:100%; border-spacing:0; border-collapse:0; color:#000; table-layout:fixed}
+table td {word-wrap: break-word;}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {-webkit-appearance: none; margin: 0;}
+::-webkit-input-placeholder {font-size:2.5rem; color:#999; vertical-align:middle;}
+
+
+
+

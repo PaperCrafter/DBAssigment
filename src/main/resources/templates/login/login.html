@@ -1,0 +1,96 @@
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+   <!-- <style>
+        table { border: 1px solid #333333; border-collapse: collapse; }
+        td { padding: 10px; border: 1px solid #333333; }
+        input { padding:5px; }
+    </style>-->
+
+    <!--<style type="text/css">
+        .login-box{
+            background-color: whitesmoke;
+        }
+    </style>-->
+
+</head>
+
+
+
+
+
+
+
+
+<body>
+
+<div class="notice">
+    <div class="wrapper">
+        <h3 >LOG IN </h3>
+        <form role="form" name="loginForm" id="loginForm" method="post" action="/login/login">
+            <div class="board_latest news wow fadeInUp">
+                <strong>아이디</strong>
+                    <ul>
+                        <li>
+                             <input type="text" class="form-control"name="id" id="id" placeholder="아이디를 입력하세요"></input>
+                        </li>
+                    </ul>
+            </div><!-- //board_latest -->
+            <div class="board_latest event wow fadeInUp">
+                <strong>비밀번호</strong>
+                        <ul>
+                            <li>
+                                <input type="password" class="form-control" name="passwd" id="passwd" placeholder="비밀번호를 입력하세요."></input>
+                            </li>
+                        </ul>
+            </div><!-- //board_latest -->
+        </form>
+    </div>
+    <ul class="tab wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+        <li class="btn_login">
+            <input type="button"  value="로그인" onclick="login();"/>
+        </li>
+        <li class="btn_join">
+            <input type="button"  value="회원가입" onclick="insert();"/>
+        </li>
+
+    </ul>
+</div><!-- //notice -->
+
+
+
+                <script type="text/javascript">
+                    var login = function(){
+                        if($.trim($('#id').val())===''){
+                            alert('아이디를 입력하세요.');
+                            $('#id').focus();
+                            return;
+                        }
+                        if($.trim($('#passwd').val())===''){
+                            alert('비밀번호를 입력하세요.');
+                            $('#password').focus();
+                            return;
+                        }
+                        $('#loginForm').submit();
+                    };
+
+                    var insert = function(){
+                        location.href ='/user/insert';
+                    };
+
+                </script>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

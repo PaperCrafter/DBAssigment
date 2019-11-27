@@ -5,33 +5,39 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>
 <body>
-    <h1>Board Insert After</h1>
+<h1>Board Insert After</h1>
+<!--
 
+================================================================================================
+아래의 form 태그 안에 내용들은 있어도 그만 없어도 그만이다 어짜피 board_num만 넘겨주면
+다음 " /board/view/' + board_num " 에서 다시 mapper selectBoard(board_num)해주니깐 다 가져올수 있다.
+================================================================================================
 
-    <form name="insertForm" id="insertForm" method="get" style="width:600px;">
+-->
+<form name="insertForm" id="insertForm" method="get" style="width:600px;">
 
-        <div><span>글번호</span> <span th:text="${board.qna_no}">글번호</span></div>
+    <div><span>글번호</span> <span th:text="${board.board_num}">글번호</span></div>
+    <input type="hidden" th:name="user_number" th:id="user_number" th:value="${board.user_number}"/>
+    <div><span>회원번호</span> <span th:text="${board.user_number}">회원번호</span></div>
 
-        <div><span>회원번호</span> <span th:text="${board.m_no}">회원번호</span></div>
+    <div><span>등록일자</span> <span th:text="${#dates.format(board.board_register_date, 'YYYY-mm-dd HH:mm')}">등록일자</span></div>
 
-        <div><span>등록일자</span> <span th:text="${#dates.format(board.qna_regdate, 'YYYY-mm-dd HH:mm')}">등록일자</span></div>
+    <div>
+        <span>상세</span>
+        <div th:text="${board.board_content}"></div>
+    </div>
+</form>
 
-        <div>
-            <span>상세</span>
-            <div th:text="${board.qna_context}"></div>
-        </div>
-    </form>
+<script type="text/javascript" th:inline="javascript">
 
-    <script type="text/javascript" th:inline="javascript">
+    var board_num = /*[[ ${board.board_num} ]]*/;
 
-        var qna_no = /*[[ ${board.qna_no} ]]*/;
+    $(document).ready(function(){
 
-        $(document).ready(function(){
+        $('#insertForm').attr('action','/board/view/' + board_num).submit();
 
-            $('#insertForm').attr('action','/board/view/' + qna_no).submit();
-
-        });
-    </script>
+    });
+</script>
 
 </body>
 </html>

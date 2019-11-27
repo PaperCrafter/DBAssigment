@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>
+<body>
+<h1>User Insert After</h1>
+
+
+<form name="insertForm" id="insertForm" method="get" style="width:600px;">
+
+    <div><span>회원번호</span> <span th:text="${user.user_number}">회원번호</span></div>
+
+    <div><span>회원 아이디</span> <span th:text="${user.id}">회원 아이디</span></div>
+
+    <div><span>회원 이메일</span> <span th:text="${user.email}">회원 이메일</span></div>
+
+    <div><span>회원 성별</span> <span th:text="${user.gender}">회원 성별</span></div>
+
+    <div><span>회원 주소</span> <span th:text="${user.address}">회원 주소</span></div>
+
+<!--
+<div><span>등록일자</span> <span th:text="${#dates.format(user.qna_regdate, 'YYYY-mm-dd HH:mm')}">등록일자</span></div>
+-->
+
+    <div>
+        <span>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span>
+        <div>|||||||||||||||||||||||||||||||||||</div>
+        <span>위의 내용으로 가입 처리 해드릴까요?</span>
+<!--        <div th:text="${user.qna_context}"></div>  -->
+    </div>
+</form>
+
+<input type="button" value="등록" onclick="insert();"/>
+<input type="button" value ="다시 작성하기" onclick="delete_b_user();"/>
+
+<script type="text/javascript">
+    var insert = function(){
+        location.href='/login/login';      /// <---   여기다 가입 등록 누르면 로그인 성공하고 나서 페이지 구현.
+    };
+
+    var user_number = [[ ${user.user_number} ]];
+
+
+    var delete_b_user = function(){
+
+        $('#insertForm').attr('action','/user/delete_b/' + user_number).submit();
+
+    };
+
+</script>
+
+<!--<script type="text/javascript" th:inline="javascript">
+
+    var user_number = /!*[[ ${user.user_number} ]]*!/;
+
+    $(document).ready(function(){
+
+        $('#insertForm').attr('action','/user/view/' + user_number).submit();
+
+    });
+</script>-->
+
+</body>
+</html>

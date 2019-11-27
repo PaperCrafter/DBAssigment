@@ -2,70 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    <mapper namespace="com.bit.academy.mapper.BoardMapper">
+<mapper namespace="com.team02.prime.mapper.BoardMapper">
 
-    <!-- Board insert -->
     <insert id="insertBoard"
-            parameterType="com.bit.academy.model.BoardVO"
+            parameterType="com.team02.prime.model.BoardVO"
             useGeneratedKeys="true"
-            keyProperty="qna_no">
+            keyProperty="board_num">
         <![CDATA[
-            INSERT INTO qna (
-                m_no, qna_context, qna_passwd, qna_regdate
+            INSERT INTO board (
+                board_num ,board_title, board_password, board_register_date ,board_content,board_view_cnt,user_number
             )
             VALUES (
-                #{m_no}, #{qna_context}, password(#{qna_passwd}), now()
+               #{board_num}, #{board_title}, #{board_password},now(), #{board_content},#{board_view_cnt},#{user_number}
             )
         ]]>
     </insert>
 
-    <update id="updateBoard" parameterType="com.bit.academy.model.BoardVO">
-        UPDATE qna
+    <update id="updateBoard" parameterType="com.team02.prime.model.BoardVO">
+        UPDATE board
         SET
-            qna_context = #{qna_context}
-        WHERE qna_no = #{qna_no}
+            board_title = #{board_title},
+            board_content = #{board_content},
+            board_password = #{board_password}
+        WHERE board_num = #{board_num}
 
     </update>
 
     <delete id="deleteBoard" parameterType="int">
-        DELETE FROM qna WHERE qna_no = #{qna_no}
+        DELETE FROM board WHERE board_num = #{board_num}
     </delete>
 
-    <select id="selectBoard" parameterType="Integer" resultType="com.bit.academy.model.BoardVO">
+    <select id="selectBoard" parameterType="int" resultType="com.team02.prime.model.BoardVO">
         SELECT
-            qna_no, m_no, qna_context, qna_passwd, qna_regdate
-        FROM qna
-        WHERE qna_no = #{qna_no}
+            board_num, board_title, user_number, board_content, board_password, board_register_date, board_view_cnt
+        FROM board
+        WHERE board_num = #{board_num}
     </select>
 
-    <select id="selectBoardList"
-            parameterType="com.bit.academy.model.BoardPaging"
-            resultType="com.bit.academy.model.BoardVO">
+    <select id="selectBoardList"  parameterType="com.team02.prime.model.BoardPaging" resultType="com.team02.prime.model.BoardVO">
         SELECT
-            q.qna_no, q.m_no, q.qna_context, q.qna_regdate
-            , m.m_id, m.m_name
-        FROM qna q
-            inner join member m on q.m_no = m.m_no
-        WHERE 1=1
-        <if test="searchKeyword != null and searchKeyword != ''">
-            AND q.qna_context like concat('%', ${searchKeyword}, '%')
-        </if>
-        ORDER BY q.qna_no DESC
+        b.board_num, b.board_title, b.board_register_date, b.board_content, b.user_number, u.id
+        FROM board b
+        INNER join user u on b.user_number = u.user_number
+        -- WHERE 1=1
+        <!--<if test="searchKeyword != null and searchKeyword != ''">
+            AND board_content like concat('%', ${searchKeyword}, '%')
+        </if>-->
+        ORDER BY b.board_num DESC
         LIMIT #{limitBegin}, #{articleCount}
     </select>
 
+<!--    <select id="selectBoardId"  parameterType="com.team02.prime.model.BoardVO" resultType="String">-->
+<!--        SELECT-->
+<!--         id-->
+<!--        FROM user-->
+<!--        where  user_number = #{user_number}-->
+<!--    </select>-->
+
 
     <select id="selectBoardListCount"
-            parameterType="com.bit.academy.model.BoardPaging"
+            parameterType="com.team02.prime.model.BoardPaging"
             resultType="int">
-        select count(1) from qna
+        select count(1) from board b
         WHERE 1=1
         <if test="searchKeyword != null and searchKeyword != ''">
-            AND q.qna_context like concat('%', ${searchKeyword}, '%')
+            AND b.board_content like concat('%', ${searchKeyword}, '%')
         </if>
     </select>
 
-
+    <select id="password" parameterType="com.team02.prime.model.BoardVO" resultType="com.team02.prime.model.BoardVO">
+        SELECT
+            board_num,board_password,user_number,board_title,board_register_date,board_view_cnt
+        FROM board
+        WHERE board_num = #{board_num} and board_password = #{board_password}
+    </select>
 
 
 </mapper>
