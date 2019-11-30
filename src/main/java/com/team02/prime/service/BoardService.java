@@ -73,7 +73,7 @@ public interface BoardService {
      * @param reply_num
      * @return
      */
-    int deleteReply(int reply_num,String reply_id);
+    int deleteReply(int reply_num);
 
     /**
      * 게시물 수정 비번확인

@@ -127,9 +127,9 @@ public class BoardServiceImpl implements BoardService {
 
 
     @Override
-    public int deleteReply(int reply_num,String reply_id){
+    public int deleteReply(int reply_num){
 
-        return this.replyMapper.deleteReply(reply_num,reply_id);
+        return this.replyMapper.deleteReply(reply_num);
 
     }
 

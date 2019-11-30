@@ -36,7 +36,7 @@
     <delete id="deleteReply" >
 -- 	파라미터 타입이 int,String 두개이고 ReplyVO로 가져오지 않을때는 parameter type 뭘로 해줘야하나?
 		DELETE FROM reply
-		WHERE reply_num = #{reply_num} and reply_id = #{reply_id}
+		WHERE reply_num = #{reply_num}
 
 	</delete>
     

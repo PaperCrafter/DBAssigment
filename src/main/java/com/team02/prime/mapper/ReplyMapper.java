@@ -33,7 +33,7 @@ public interface ReplyMapper {
      *     댓글삭제
      *    @param reply_num,reply_id
      */
-    int deleteReply(int reply_num,String reply_id);
+    int deleteReply(int reply_num);
 
 
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team02.prime.mapper.ReservationMapper">
+
+    <insert id="create" parameterType="com.team02.prime.model.ReservationVO">
+
+		INSERT INTO reservation(user_number, seat_num, reservation_regdate, reservation_starttime, reservation_endtime)
+
+		VALUES ( #{user_number}, #{seat_num},  now() , #{reservation_starttime}, #{reservation_endtime})
+
+	</insert>
+
+    <select id="findAll" resultType="com.team02.prime.model.ReservationVO">
+
+		SELECT *
+		FROM reservation
+
+	</select>
+
+	<select id="findByResNum" resultType="com.team02.prime.model.ReservationVO">
+
+		SELECT *
+		FROM reservation
+		where reservation_num = #{reservation_num}
+
+	</select>
+
+    <delete id="deleteReservation" >
+
+		DELETE FROM reservation
+		WHERE reservation_num = #{reservation_num}
+
+	</delete>
+
+
+</mapper>

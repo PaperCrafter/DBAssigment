@@ -7,29 +7,28 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     //@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
-    @GetMapping("/user/insert")
+    @GetMapping("/insert")
     public String userInsert(){
         return "user/insert";
     }
 
-    @PostMapping("/user/insert")
+    @PostMapping("/insert")
     public String userInsertExecute(Model model, @ModelAttribute UserVO userVO){
 
 
@@ -53,17 +52,17 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/view/{user_number}")
+    @GetMapping("/view/{user_number}")
     public String userView(Model model, @PathVariable int user_number){
         model.addAttribute("user", this.userService.selectUser(user_number));
         return "user/view";
     }
-    @PostMapping("/user/delete/{user_number}")
+    @PostMapping("/delete/{user_number}")
     public String userDelete(HttpServletRequest request,@PathVariable int user_number){
         this.userService.deleteUser(request,user_number);
         return "user/delete_after";
     }
-    @GetMapping("/user/delete_b/{user_number}")
+    @GetMapping("/delete_b/{user_number}")
     public String b_userDelete(HttpServletRequest request,@PathVariable int user_number){
         this.userService.delete_b_User(request,user_number);
         return "user/insert";
@@ -71,20 +70,20 @@ public class UserController {
 
 
 
-    @GetMapping("/user/update/{user_number}")
+    @GetMapping("/update/{user_number}")
     public String userUpdate(Model model, @PathVariable int user_number){
         model.addAttribute("user", this.userService.selectUser(user_number));
         return "user/update";
     }
 
-    @PostMapping("/user/update")
+    @PostMapping("/update")
     public String userUpdateExecute(Model model, @ModelAttribute UserVO userVO){
         this.userService.updateUserInfo(userVO);
         model.addAttribute("user", this.userService.selectUser(userVO.getUser_number()));
         return "user/join_after";
     }
 
-    @GetMapping("/user/list")
+    @GetMapping("/list")
     public String userList(Model model){
         model.addAttribute("userList", this.userService.selectUserList());
 
@@ -95,6 +94,7 @@ public class UserController {
 */
         return "user/list";
     }
+
 }
 
 

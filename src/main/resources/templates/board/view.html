@@ -76,7 +76,7 @@
     var reply_save = function(){
 
         var comment = $('#comment').val();
-        var url = "/restBoard/saveReply";
+        var url = "/boards";
         /*
         //var board_num = {"board_num" : [[ ${board.board_num} ]]};
         //var reply_id ={"reply_id":[[ ${user.id} ]]};
@@ -94,24 +94,24 @@
         var reply_id = [[${user.id}]];
         board_num = [[${board.board_num}]];
 
-        var paramData = JSON.stringify({
-            "comment": comment
-            , "reply_id": reply_id
-            , "board_num": board_num
+        var reply = JSON.stringify({
+            "comment": comment ,
+            "reply_id": reply_id,
+            "board_num": board_num
         });
-        var headers = {"Content-Type" : "application/json"
-            , "X-HTTP-Method-Override" : "POST"};
+
+        var headers = {"Content-Type" : "application/json"};
+
         $.ajax({
               url: url
             , headers : headers
-            , data : paramData
+            , data : reply
             , type : "POST"
-            , dataType : 'text'
+            , dataType : 'JSON'
             , success: function(result){
                 showReplyList();
                 $('#comment').val('');
                 $('#reply_id').val('');
-
             }
             , error: function(error){
                 console.log("에러 : " + error);
@@ -164,7 +164,7 @@
         r_htmls += '<span class="d-block">';
         r_htmls += '<strong class="text-gray-dark">' + reply_id + '</strong>';
         r_htmls += '<span style="padding-left: 7px; font-size: 9pt">';
-        r_htmls += '<a href="javascript:void(0)" onclick="fn_updateReply(' + reply_num + ', \'' + reply_id + '\')" style="padding-right:5px">저장</a>';
+        r_htmls += '<a href="javascript:void(0)" onclick="fn_updateReply('+ reply_num +')" style="padding-right:5px">저장</a>';
         r_htmls += '<a href="javascript:void(0)" onclick="showReplyList()">취소<a>';
         r_htmls += '</span>';
         r_htmls += '</span>';
@@ -186,27 +186,30 @@
 댓글 수정하기 눌렀을때 실행되는 스크립트
 -->
 <script type="text/javascript">
-    function fn_updateReply(reply_num, reply_id){
+    function fn_updateReply(reply_num){
         var replyEditComment = $('#editComment').val();
-        var url = "/restBoard/updateReply";
-        var paramData = JSON.stringify(
-            {"comment": replyEditComment
-                , "reply_id" : reply_id
-                , "reply_num": reply_num});
+        var url = "/boards";
+        var data = JSON.stringify(
+                {
+                    "comment": replyEditComment,
+                    "reply_num": reply_num
+                }
+            );
 
-        var headers = {"Content-Type" : "application/json"
-            , "X-HTTP-Method-Override" : "POST"};
+        var headers = {"Content-Type" : "application/json"};
         $.ajax({
-            url: url
-            , headers : headers
-            , data : paramData
-            , type : "POST"
-            , dataType : 'text'
-            , success: function(result){
-                console.log(result);
+            url: url,
+            headers : headers,
+            data : data,
+            type : "PATCH",
+            dataType : 'JSON',
+            success: function(result){
+                console.log(123);
+                var elem = $('reply_num' + reply_num).parent().children('editComment');
+                elem.val(replyEditComment);
                 showReplyList();
-            }
-            , error: function(error){
+            },
+            error: function(error){
                 console.log("에러 : " + error);
             }
         });
@@ -218,20 +221,15 @@
 댓글 삭제하기 눌렀을때 실행되는 스크립트
 -->
 <script type="text/javascript">
-    function fn_deleteReply(reply_num,reply_id){
-        var paramData = {
-            "reply_num": reply_num,
-            "reply_id" : reply_id
-        };
+    function fn_deleteReply(reply_num){
+        var url = "/boards" + "/" + reply_num ;
         $.ajax({
-            url: "/restBoard/deleteReply"
-            , data : paramData
-            , type : 'GET'
-            , dataType : 'text'
-            , success: function(result){
+            url: url,
+            type : 'DELETE',
+            success: function(result){
                 showReplyList();
-            }
-            , error: function(error){
+            },
+            error: function(error){
                 console.log("에러 : " + error);
             }
         });
@@ -247,15 +245,16 @@
     });
 
     function showReplyList(){
-        var url = "/restBoard/getReplyList";
-        var board_num = {"board_num" : [[ ${board.board_num} ]]};
-        var user_id = /*[[${user.id}]]*/;
+        var url = "/boards" ;
+        var board_num = [[${board.board_num}]] ;
+        url = url + "/" + board_num + "/replies";
+        // var board_num = {"board_num" : [[ ${board.board_num} ]]};
+        var user_id = [[${user.id}]];
 
         // var board_num = [[${board.board_num}]];
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: url,
-            data: board_num,
             dataType:'json',
             success: function(result) {
                 var r_htmls = "";
@@ -278,7 +277,7 @@
                         // 본인 댓글일때
                         if(user_id == this.reply_id){
                             r_htmls += '<a href="javascript:void(0)" onclick="fn_editReply(' + this.reply_num + ', \'' + this.reply_id + '\', \'' + this.comment + '\' )" style="padding-right:5px">수정</a>';
-                            r_htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply(' + this.reply_num + ',\'' + this.reply_id + '\')" >삭제</a>';
+                            r_htmls += '<a href="javascript:void(0)" onclick="fn_deleteReply('+this.reply_num+')" >삭제</a>';
                         }
                         else{
                         }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.team02.prime.mapper.SeatMapper">
+
+    <select id="findAll" resultType="com.team02.prime.model.SeatVO">
+		SELECT *
+		FROM seat
+	</select>
+
+
+	<select id="findBySeatNum" resultType="com.team02.prime.model.SeatVO">
+		SELECT *
+		FROM seat
+		WHERE seat_num = #{seat_num}
+	</select>
+
+	<update id="updateSeat" parameterType="com.team02.prime.model.SeatVO" >
+
+		UPDATE seat SET seat_available = #{seat_available}
+		WHERE seat_num = #{seat_num}
+
+	</update>
+
+<!--    <insert id="saveReply" parameterType="com.team02.prime.model.SeatVO">-->
+
+<!--		INSERT INTO reply(board_num, reply_num, comment, reply_id, register_date,user_number)-->
+
+<!--		VALUES ( #{board_num}, #{reply_num}, #{comment}, #{reply_id}, now(), (select user_number from user where #{reply_id} = user.id) )-->
+
+<!--	</insert>-->
+
+
+
+
+<!--    <delete id="deleteReply" >-->
+<!--&#45;&#45; 	파라미터 타입이 int,String 두개이고 ReplyVO로 가져오지 않을때는 parameter type 뭘로 해줘야하나?-->
+<!--		DELETE FROM reply-->
+<!--		WHERE reply_num = #{reply_num} and reply_id = #{reply_id}-->
+
+<!--	</delete>-->
+
+
+</mapper>
