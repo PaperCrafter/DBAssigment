@@ -49,8 +49,6 @@ public class ReplyApiController {
     @DeleteMapping(value = "/deleteReply/{reply_num}/{reply_id}")
     public void deleteReply(@PathVariable("reply_num")int reply_num,
                             @PathVariable("reply_id")String reply_id){
-
-
         this.replyService.deleteReply(reply_num,reply_id);
     }
 }

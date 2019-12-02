@@ -172,6 +172,8 @@ function addReserveevent() {
                 success: function (seats) {
                     this.class = false;
                     console.log("Success");
+                    location.href = '/reservation';
+                    alert("에약되었습니다.");
                 }
             })
         }else{
