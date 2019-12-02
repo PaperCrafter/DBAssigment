@@ -1,0 +1,22 @@
+h1 {
+    color:#ff8c00;
+}
+
+td{
+    color:#333333;
+}
+
+a{
+    color:#333333;
+}
+
+li a{
+    color:#333333;
+}
+
+
+.table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}

@@ -1,0 +1,29 @@
+
+body{
+    background-size: auto 100%;
+    background-image: url("/images/pic/cafe01.jpg");
+}
+
+h2{
+    font-weight: bold;
+}
+
+.notice{
+    width:500px;
+    background:#f7f7f7;
+    padding: 50px;
+    border: 70px;
+    margin-left: 15rem;
+    margin-right: 15rem;
+    box-shadow: 5px 5px 3px #1b1e21;
+}
+
+.content-wrapper{
+    background:#f7f7f7;
+    border: 50px;
+}
+
+.button{
+    background: #ff8c00;
+    color:white;
+}

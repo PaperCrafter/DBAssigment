@@ -2,75 +2,59 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <!-- jQuery -->
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Bootstrap CSS -->
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <!--    common css-->
-      <link rel="stylesheet" href="/css/common.css">
-
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/board/insert.css">
 
 </head>
 <body>
 <article>
+    <div class="align-content-center content-wrapper">
+        <div class="container align-content-center" role="main">
+            <h2>문의 남기기</h2>
+            <form name="insertForm" id="insertForm" method="post" action="/board/insert">
+
+                <div class="mb-3" ><label>회원번호</label><span th:name="user_number" th:id="user_number" th:text="${user.user_number}">회원번호</span>
+
+                    <input type="hidden" th:name="user_number" th:id="user_number" th:value="${user.user_number}"/></div>
+
+                <div class="mb-3" ><label>회원 아이디</label><span  th:name="id" th:id="id" th:text="${user.id}">회원 아이디</span>
+
+                    <input type="hidden" th:name="id" th:id="id" th:value="${user.id}"></input></div>
 
 
-    <!--    <th:block if="${session.user != null }">-->
-    <!--        <script type="text/javascript" th:inline="javascript">-->
+                <!--        th:value="${ session.user!=null ? session.user.name : '' }";-->
+                <div class="mb-3" >
+                    <label>비밀번호</label>
+                    <input type="password" class="form-control" name="board_password" id="board_password" value="1234" /></div>
 
-    <!--            var user = /*[[${session.user}]]*/;-->
-    <!--            -->
-
-    <!--            if (user.id ==is_user.passwd){-->
-    <!--                alert( user.id+'회원님 환영합니다.');-->
-    <!--                location.href='/board/list';-->
-    <!--            }-->
-    <!--            else{-->
-    <!--                alert( '아이디와 비번을 확인하세요');-->
-    <!--                location.href='/login/login';-->
-    <!--            }-->
-
-    <!--        </script>-->
-    <!--    </th:block>-->
-
-    <div class="container" role="main">
-        <form name="insertForm" id="insertForm" method="post" action="/board/insert"
-              style="width:600px;">
-
-            <div class="mb-3" ><label>회원번호</label><span th:name="user_number" th:id="user_number" th:text="${user.user_number}">회원번호</span>
-
-                <input type="hidden" th:name="user_number" th:id="user_number" th:value="${user.user_number}"/></div>
-
-            <div class="mb-3" ><label>회원 아이디</label><span  th:name="id" th:id="id" th:text="${user.id}">회원 아이디</span>
-
-                <input type="hidden" th:name="id" th:id="id" th:value="${user.id}"></input></div>
+                <div class="mb-3" >
+                    <label>글 제목</label>
+                    <input type="text" class="form-control" name="board_title" id="board_title" value="글제목입니다." /></div>
 
 
-            <!--        th:value="${ session.user!=null ? session.user.name : '' }";-->
-            <div class="mb-3" ><label>비밀번호</label>
-                <input type="password" name="board_password" id="board_password" value="1234" /></div>
+                <div class="mb-3" ><label>상세</label>
+                    <textarea name="board_content" class="form-control" id="board_content" rows="5" > 내용을 입력해주세요.</textarea>
+                </div>
+            </form>
 
-            <div class="mb-3" ><label>글 제목</label>
-                <input type="text" name="board_title" id="board_title" value="글제목입니다." /></div>
+            <input type="button" class="btn btn-primary" value="등록" onclick="insert();"/>
+            <input type="button" class="btn btn-primary" value="이전" onclick="prev();"/>
 
+            <script type="text/javascript">
+                var prev = function(){
+                    return location.href="/board/list";
+                };
 
-            <div class="mb-3" ><label>상세</label>
-                <textarea name="board_content" class="form-control" id="board_content" rows="5" > 내용을 입력해주세요.</textarea>
-            </div>
-        </form>
+                var insert = function(){
+                    $('#insertForm').submit();
+                };
+            </script>
 
-        <input type="button" class="btn btn-sm btn-primary" value="등록" onclick="insert();"/>
-
-        <script type="text/javascript">
-            var insert = function(){
-                $('#insertForm').submit();
-            };
-        </script>
-
+        </div>
     </div>
 </article>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
 </body>
 </html>
