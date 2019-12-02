@@ -18,9 +18,9 @@ public class HomeController {
     private UserService userService;
 
     //@RequestMapping(value = "/user/insert", method = RequestMethod.GET)
-    @GetMapping("/home/home_main")
+    @GetMapping("/home")
     public String homeMain(HttpServletRequest request) {
        UserVO userVO = (UserVO) request.getSession().getAttribute("user");
-        return "home/home_main";
+        return "home/main";
     }
 }

@@ -1,11 +1,11 @@
-# µ¥ÀÌÅÍº£ÀÌ½º °úÁ¦¿ë µ¶¼­½Ç ¿¹¾à À¥ÆäÀÌÁö
+# ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 ------
-## ½ÇÇà ¹æ¹ý
+## ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-1. ½ºÇÁ¸µ ºÎÆ® ÇÁ·ÎÁ§Æ® ½ÇÇà
+1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 
-2. localhost:8092/home Á¢¼Ó
+2. localhost:8092/home ï¿½ï¿½ï¿½ï¿½
 
 
 ## URL
@@ -17,15 +17,15 @@
 
 |page |HTTP method|rout|
 |-----------|------|------|
-|¸ÞÀÎÆäÀÌÁö|get|/home/home_main|
+|ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|get|/home|
 
 ###LoginControll
 
 |page |HTTP method|rout|
 |-----------|------|------|
-|·Î±×ÀÎ ÆäÀÌÁö|get|/login/login|
-|·Î±×ÀÎ °á°ú|post|/login/login_result|
-|·Î±×¾Æ¿ô |get|/login/logout|
+|ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|get|/login/login|
+|ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½|post|/login/login_result|
+|ï¿½Î±×¾Æ¿ï¿½ |get|/login/logout|
 
 
 ## RESTful api
@@ -34,30 +34,30 @@
 
 |CRUD|HTTP method|Rout|
 |-----------|------|------|
-|Æ¯Á¤ º¸µå¿¡ ´ëÇÑ ´ñ±Û ÀüÃ¼ °¡Á®¿À±â|get|/boards/{board_num}/replies|
+|Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|get|/boards/{board_num}/replies|
 
 #### Reply
 
 |CRUD|HTTP method|Rout|
 |-----------|------|------|
-|ÀÀ´ä µî·Ï|post|/replies|
-|ÀÀ´ä ¼öÁ¤|patch|/replies|
-|ÀÀ´ä »èÁ¦|delete|/replies/{reply_num}
+|ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½|post|/replies|
+|ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½|patch|/replies|
+|ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½|delete|/replies/{reply_num}
 
 
 #### Reservation
 
 |CRUD|HTTP method|Rout|
 |-----------|------|------|
-|ÀüÃ¼ ¿¹¾à °¡Á®¿À±â|get|/reservations|
-|¿¹¾à ÇÏ³ª °¡Á®¿À±â|get|/reservations/{reservation_num}|
-|¿¹¾à »ý¼º|post|/memos/{{reservation_num}}|
+|ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|get|/reservations|
+|ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|get|/reservations/{reservation_num}|
+|ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½|post|/memos/{{reservation_num}}|
 
 #### Seat
 
 |CRUD|HTTP method|Rout|
 |-----------|------|------|
-|ÀüÃ¼ ÁÂ¼® °¡Á®¿À±â|get|/seats|
-|Æ¯Á¤ ÁÂ¼® °¡Á®¿À±â|get|/seats/{seat_num}|
-|ÁÂ¼® »óÅÂ ¼öÁ¤(¿¹¾à°¡´É/¿¹¾àºÒ°¡)||/seats/{seatnum}|
+|ï¿½ï¿½Ã¼ ï¿½Â¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|get|/seats|
+|Æ¯ï¿½ï¿½ ï¿½Â¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½|get|/seats/{seat_num}|
+|ï¿½Â¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½à°¡ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ò°ï¿½)||/seats/{seatnum}|
 
